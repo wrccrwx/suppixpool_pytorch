@@ -13,4 +13,4 @@ https://github.com/princeton-vl/CornerNet/issues/33
   to : auto max_val = at::zeros( {batch, channel, height}, torch::CUDA(at::kFloat));
   ```
   ### setup
-      python setup.py install 
+      python setup.py install (--user)
