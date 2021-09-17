@@ -65,8 +65,11 @@ class SupPixUnpool(torch.nn.Module):
         super(SupPixUnpool, self).__init__()
 
     def forward(self, pooled, spx):
-        outShape = pooled.size()[0:2]+spx.size()[-2:]
+        original_shape = pooled.size()[0:2]+spx.size()[-2:]
+        spx = spx.reshape(pooled.size()[0], -1)
+        outShape = pooled.size()[0:2]+spx.size()[-1]
         out = pooled.new_zeros(outShape)
         for batch in range(pooled.size()[0]):
-            out[batch, :, :, :] = pooled[batch, :, spx[batch,:,:]]
+            out[batch, :, :] = pooled[batch, :, spx[batch,:]]
+        out = out.reshape(original_shape)
         return out
